@@ -6,7 +6,7 @@ import "./Countries.css";
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [visitedCountries, setVisitedCountries] = useState([]);
-  const [visitedFlags, setVisitedFlag] = useState([])
+  const [visitedFlags, setVisitedFlag] = useState([]);
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/independent?status=true")
@@ -14,17 +14,16 @@ const Countries = () => {
       .then((data) => setCountries(data));
   }, []);
 
-  const handleVisitedFlags = flag => {
-    const newVisitedFlags = [...visitedFlags, flag]
-    setVisitedFlag(newVisitedFlags);
-  }
-
-  const hendleVisitedCountry = (country) =>{
-    console.log('add to your visited country')
+  const hendleVisitedCountry = (country) => {
+    console.log("add to your visited country");
     const newVisitedCountries = [...visitedCountries, country];
     setVisitedCountries(newVisitedCountries);
-  } 
+  };
 
+  const hendleVisitedFlags = (flag) => {
+    const newVisitedFlags = [...visitedFlags, flag];
+    setVisitedFlag(newVisitedFlags);
+  };
   return (
     <div>
       <h3>Countries: {countries.length}</h3>
@@ -32,24 +31,25 @@ const Countries = () => {
       <div>
         <h4>Visited Countries: {visitedCountries.length}</h4>
         <ul>
-          {
-            visitedCountries.map(country => <li key={country.cca3}>{country.name.common}</li>)
-          }
+          {visitedCountries.map((country) => (
+            <li key={country.cca3}>{country.name.common}</li>
+          ))}
         </ul>
       </div>
       <div className="flag-container">
-          {
-            visitedFlags.map(flag => <img src={flag}></img>)
-          }
+        {visitedFlags.map((flag) => (
+          <img src={flag}></img>
+          ))}
       </div>
       {/* display country */}
       <div className="country-container">
         {countries.map((country) => (
-          <Country 
-          key={country.cca3} 
-          hendleVisitedCountry={hendleVisitedCountry} 
-          handleVisitedFlags={handleVisitedFlags}
-          country={country}></Country>
+          <Country
+            key={country.cca3}
+            hendleVisitedCountry={hendleVisitedCountry}
+            handleVisitedFlags={hendleVisitedFlags}
+            country={country}
+          ></Country>
         ))}
       </div>
     </div>
